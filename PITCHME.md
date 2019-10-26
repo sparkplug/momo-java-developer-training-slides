@@ -165,7 +165,7 @@ The portal provides two different experiences, publisher and developer.
 - Products contain APIs, and one product can have multiple APIs.
 - Also contain usage quota and the terms of use.
 
-![Logo](assets/img/product-subscription.jpg)
+![Logo](assets/img/product-subscription.png)
 
 ---
 
