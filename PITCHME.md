@@ -157,7 +157,7 @@ The portal provides two different experiences, publisher and developer.
  - receives payment requests, processes them, connects to the backend service,
     and responding to requests.
     
- ---
+---
 
 ### Products
 
