@@ -111,7 +111,7 @@ Create, Read,Update, and Delete (CRUD) transactions against these resources
       PATCH -> for partial update of a resource
 
 ---
-## What MTN Mobile Money provides?
+### What MTN Mobile Money provides?
 
 - sim card as a financial account
 - sending and receiving money
@@ -121,9 +121,6 @@ Create, Read,Update, and Delete (CRUD) transactions against these resources
 - **remittances**
 
 ---
-
-
-
 
 ### with the Open API
  - Your software is a virtual agent
@@ -140,6 +137,7 @@ Create, Read,Update, and Delete (CRUD) transactions against these resources
 - Leverages Azure API management
 - To understand how the API works, we need to understand azure API management
 
+---
 ### MOMO API Archtecture
 
 ![Logo](assets/img/api_gateway.jpg)
