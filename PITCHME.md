@@ -167,6 +167,8 @@ The portal provides two different experiences, publisher and developer.
 - Products contain APIs, and one product can have multiple APIs.
 - Also contain usage quota and the terms of use.
 
+![Logo](assets/img/product-subscription.jpg)
+
 ---
 
 ### Products
@@ -181,12 +183,13 @@ The portal provides two different experiences, publisher and developer.
 
 - The subscription keys act as a first-level security feature, but more importantly, 
 they are used to track developers, usage, and policy configurations.
+---
+### Subscriptions ....
 
 - Developers can also register their applications using the developer portal
 - A developer can have more than one subscription to each product. 
 - Each subscription is identified by a subscription key, and each subscription key is scoped to a product.
  - A developer cannot use a single subscription key for two different products
-
 
 ---
 ### Developer Account
@@ -244,7 +247,7 @@ Here is your User Id and API secret : {'apiKey': 'b0431db58a9b41faa8f5860230xxxx
 ---
 
 
-## Configuration
+### Configuration
 
 - Best practice to configure as environment variables
 
@@ -270,22 +273,20 @@ config = {
 
 class: center, middle
 
-## For maximum security, implement the integration with MTN in your backend
+### For maximum security, implement the integration with MTN in your backend
 
 This way, you will not need any secret keys in your client
 
 ---
 
 
-# Collections
+### Collections
 
 Withdraw money from your customer's account
 
 ---
 
-class: middle
-
-## Initializing collections
+### Initializing collections
 
 ```python
 import os
@@ -299,9 +300,7 @@ client = Collection({
 ```
 
 ---
-
-
-## Requesting a payment
+### Requesting a payment
 
 - Call `requestToPay`, it returns a transaction id
 - You can store the transaction id for later use
@@ -328,7 +327,7 @@ except MomoError e:
 ---
 
 
-## Requesting a payment
+### Requesting a payment
 
 - In sandbox, use EUR as the currency ¯\\\_(ツ)\_/¯
 - In production, use the currency of your country
@@ -339,7 +338,7 @@ except MomoError e:
 ---
 
 
-# But the payment is not yet complete
+### But the payment is not yet complete
 
 As an agent, you cannot exchange your goods until you are sure the payment has transferred to your account
 
@@ -348,7 +347,7 @@ So how can you be sure that the transaction has been completed?
 ---
 
 
-# Polling
+### Polling
 
 - Before exchanging goods, call `getTransaction` with the transaction id every few seconds until it succeeds or fails
 - This technique is known as polling
@@ -356,7 +355,7 @@ So how can you be sure that the transaction has been completed?
 ---
 
 
-# Callback
+### Callback
 
 - if you do not want to poll, you can setup an API endpoint to receive requests from MTN when the transaction status changes,
 - you can pass the endpoint url as part of `requestToPay`
@@ -366,7 +365,7 @@ So how can you be sure that the transaction has been completed?
 ---
 
 
-# Errors
+### Errors
 
 - a transaction can fail immediately if;
   - credentials are incorrect/invalid/expired
@@ -380,14 +379,14 @@ So how can you be sure that the transaction has been completed?
 ---
 
 
-# Disbursements
+### Disbursements
 
 Deposit money to a mobile money account
 
 ---
 
 
-## Initializing disbursements
+### Initializing disbursements
 
 ```python
 import os
@@ -405,7 +404,7 @@ NOTE: remember to use a generate new credentials using a disbursements primary k
 ---
 
 
-## Making a payment
+### Making a payment
 
 - Call `transfer`, it returns  a transaction id or fails with  an error
 
@@ -425,7 +424,7 @@ client.transfer(amount="600", mobile="256772123456", external_id="123456789", pa
 ---
 
 
-## Making a payment
+### Making a payment
 
 - Same as collections;
   - In sandbox, use EUR as the currency ¯\\\_(ツ)\_/¯
@@ -437,7 +436,7 @@ client.transfer(amount="600", mobile="256772123456", external_id="123456789", pa
 ---
 
 
-## Making a payment
+### Making a payment
 
 - Since there is no approval process for disbursements, it safe to assume they complete immediately
 - For 100% certainty, you can poll using `disbursements.getTransaction` or use the callback
