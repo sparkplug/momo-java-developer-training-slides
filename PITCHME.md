@@ -382,6 +382,20 @@ try {
 
 ---
 
+### cont....
+
+```java
+try {
+    String transactionRef = client.requestToPay(collMap);
+    System.out.println(transactionRef);
+} catch (MomoApiException e) {
+    e.printStackTrace();
+}
+   
+```
+
+---
+
 
 ### Requesting a payment
 
