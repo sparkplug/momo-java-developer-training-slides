@@ -3,7 +3,7 @@
 
 ### WI-FI Network: TIA_Events
 
-### Wi-Fi Key:  F33l@TIA#
+### Wi-Fi Key:  F33l@TIA# #
 
 ---
 
