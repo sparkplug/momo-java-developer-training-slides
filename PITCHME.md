@@ -27,7 +27,11 @@
 
 ### So, why an open API?
 
-MTN Uganda posits that an Open API will enable third parties to easily develop, test and deliver new value propositions are likely to produce innovative solutions that entice customers to transact more digitally.
+MTN Uganda posits that an Open API will enable third parties to easily develop, 
+test and deliver new value propositions are likely to produce innovative solutions 
+that entice customers to transact more digitally.
+
+---
 
 ### Possible use cases to explore
 
