@@ -329,14 +329,6 @@ $ ./gradlew provisionUser --args='-Ocp-Apim-Subscription-Key \
 
 ---
 
-
-### For maximum security, implement the integration with MTN in your backend
-
-This way, you will not need any secret keys in your client
-
----
-
-
 ### Collections
 
 - This operation is used to request a payment from a consumer (Payer). 
@@ -347,43 +339,45 @@ is authorized or declined by the payer or it is timed out by the system
 
 ---
 
-### Collections
+### Inintialize per Request Variables
+
+- Builder Pattern
+
+```java
+ import ug.sparkpl.momoapi.network.RequestOptions;
+
+ RequestOptions opts = RequestOptions.builder()
+                        .setCollectionApiSecret("MY_SECRET_API_KEY")
+                        .setCollectionPrimaryKey("MY_SECRET_SUBSCRIPTION_KEY")
+                        .setCollectionUserId("MYSECRET_USER_ID").build();
+```
+
+---
+
+
+### Initialize Collections Client
 
 ```java
 import java.util.HashMap;
 import java.util.Map;
-
-import ug.sparkpl.momoapi.network.RequestOptions;
 import ug.sparkpl.momoapi.network.collections.CollectionsClient;
 
+HashMap<String, String> collMap = new HashMap<String, String>();
+collMap.put("amount", "100");
+collMap.put("mobile", "1234");
+collMap.put("externalId", "ext123");
+collMap.put("payeeNote", "testNote");
+collMap.put("payerMessage", "testMessage");
 
-public class MomoCollectionsExample {
+CollectionsClient client = new CollectionsClient(opts);
 
-    public static void main(String[] args)  {
-
-         // Make a request to pay call
-         RequestOptions opts = RequestOptions.builder()
-                        .setCollectionApiSecret("MY_SECRET_API_KEY")
-                        .setCollectionPrimaryKey("MY_SECRET_SUBSCRIPTION_KEY")
-                        .setCollectionUserId("MYSECRET_USER_ID").build();
-
-                HashMap<String, String> collMap = new HashMap<String, String>();
-                collMap.put("amount", "100");
-                collMap.put("mobile", "1234");
-                collMap.put("externalId", "ext123");
-                collMap.put("payeeNote", "testNote");
-                collMap.put("payerMessage", "testMessage");
-
-                CollectionsClient client = new CollectionsClient(opts);
-
-                try {
-                    String transactionRef = client.requestToPay(collMap);
-                    System.out.println(transactionRef);
-                } catch (MomoApiException e) {
-                    e.printStackTrace();
-                }
-    }
+try {
+    String transactionRef = client.requestToPay(collMap);
+    System.out.println(transactionRef);
+} catch (MomoApiException e) {
+    e.printStackTrace();
 }
+   
 ```
 
 ---
