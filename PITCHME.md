@@ -309,6 +309,8 @@ $ ./gradlew provisionUser --args='-Ocp-Apim-Subscription-Key \
 
 - Best practice to configure as environment variables
 
+---
+
 ### Per-request Configuration
 
 ``` java
