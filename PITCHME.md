@@ -40,6 +40,7 @@ of transactions i.e make payments on behalf of their users
 - International transfers/Remittences, including request for quotation
 - Bulk transactions
 - Cash in / Cash out
+---
 
 ### What is an API?
 
