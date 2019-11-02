@@ -201,34 +201,41 @@ they are used to track developers, usage, and policy configurations.
 
 ### Installation
 
-Add the latest version of the library to your project using pip:
+#### Maven users
 
+Add this dependency to your project's POM:
 
-```sh
- pip install mtnmomo
+```xml
+<dependency>
+  <groupId>ug.sparkpl</groupId>
+  <artifactId>mtnmomo-java</artifactId>
+  <version>1.2.0</version>
+</dependency>
+```
+---
+### Gradle users
+
+Add this dependency to your project's build file:
+
+```groovy
+compile "ug.sparkpl:mtnmomo-java:1.0.0"
 ```
 
-This will install
-
-- the latest `mtnmomo` as a dependency
-- the `mtnmomo` command line tool
-
 ---
-
 
 ## Sandbox credentials
 
 Generate sandbox credentials using the command line tool;
 
-```sh
-$ mtnmomo --provider example.com --key 028b71f923f24df9a3d9fe90a6453
-Here is your User Id and API secret : {'apiKey': 'b0431db58a9b41faa8f5860230xxxxxx',
-'UserId': '053c6dea-dd68-xxxx-xxxx-c830dac9f401'}
+```bash
+## within the project, on the command line. In this example, our domain is akabbo.ug
+$ ./gradlew provisionUser --args='-Ocp-Apim-Subscription-Key \
+<primary-Key> --providerCallBackHost akabbo.ug'
 ```
 
-- provider is your application's domain
+- providerCallBackHost is your application's domain
 
-- Primary key is your subscription key from momodeveloper account
+- Ocp-Apim-Subscription-Key is your subscription key from momodeveloper account
 
 - You will get a user secret and user id which we will use later
 
@@ -236,10 +243,9 @@ Here is your User Id and API secret : {'apiKey': 'b0431db58a9b41faa8f5860230xxxx
 
 ---
 
-```sh
-$ mtnmomo --provider example.com --key 028b71f923f24df9a3d9fe90a6453
-Here is your User Id and API secret : {'apiKey': 'b0431db58a9b41faa8f5860230xxxxxx', 
-'UserId': '053c6dea-dd68-xxxx-xxxx-c830dac9f401'}
+```bash
+ {'apiKey': 'b0431db58a9b41faa8f5860230xxxxxx', \
+ 'UserId': '053c6dea-dd68-xxxx-xxxx-c830dac9f401'}
 ```
 
 ---
@@ -249,21 +255,19 @@ Here is your User Id and API secret : {'apiKey': 'b0431db58a9b41faa8f5860230xxxx
 
 - Best practice to configure as environment variables
 
-```python
-config = {
-   "ENVIRONMENT": os.environ.get("ENVIRONMENT"), 
-   "BASE_URL": os.environ.get("BASE_URL"), 
-   "CALLBACK_HOST": os.environ.get("CALLBACK_HOST"), # Mandatory.
-   "COLLECTION_PRIMARY_KEY": os.environ.get("COLLECTION_PRIMARY_KEY"), 
-   "COLLECTION_USER_ID": os.environ.get("COLLECTION_USER_ID"),
-   "COLLECTION_API_SECRET": os.environ.get("COLLECTION_API_SECRET"),
-   "REMITTANCE_USER_ID": os.environ.get("REMITTANCE_USER_ID"), 
-   "REMITTANCE_API_SECRET": os.environ.get("REMITTANCE_API_SECRET"),
-   "REMITTANCE_PRIMARY_KEY": os.envieon.get("REMITTANCE_PRIMARY_KEY"),
-   "DISBURSEMENT_USER_ID": os.environ.get("DISBURSEMENT_USER_ID"), 
-   "DISBURSEMENT_API_SECRET": os.environ.get("DISBURSEMENTS_API_SECRET"),
-   "DISBURSEMENT_PRIMARY_KEY": os.environ.get("DISBURSEMENT_PRIMARY_KEY"), 
-}
+### Per-request Configuration
+
+``` java
+
+ RequestOptions opts = RequestOptions.builder()
+                        .setCollectionApiSecret("MY_SECRET_API_KEY")
+                        .setCollectionPrimaryKey("MY_SECRET_SUBSCRIPTION_KEY")
+                        .setCollectionUserId("MYSECRET_USER_ID")
+                        .setBaseUrl("NEW_BASE_URL")  // Override the default base url
+                        .setCurrency("UGX") // Override default currency
+                        .setTargetEnvironment("env") // Override default target environment
+                        build();
+
 ```
 
 
@@ -284,42 +288,43 @@ Withdraw money from your customer's account
 
 ---
 
-### Initializing collections
+### Collections
 
-```python
-import os
-from mtnmomo.collection import Collection
+```java
+import java.util.HashMap;
+import java.util.Map;
 
-client = Collection({
-        "COLLECTION_USER_ID": os.environ.get("COLLECTION_USER_ID"),
-        "COLLECTION_API_SECRET": os.environ.get("COLLECTION_API_SECRET"),
-        "COLLECTION_PRIMARY_KEY": os.environ.get("COLLECTION_PRIMARY_KEY"),
-    })
-```
+import ug.sparkpl.momoapi.network.RequestOptions;
+import ug.sparkpl.momoapi.network.collections.CollectionsClient;
 
----
-### Requesting a payment
 
-- Call `requestToPay`, it returns a transaction id
-- You can store the transaction id for later use
+public class MomoCollectionsExample {
 
-```python
-client = Collection({
-    "COLLECTION_USER_ID": os.environ.get("COLLECTION_USER_ID"),
-    "COLLECTION_API_SECRET": os.environ.get("COLLECTION_API_SECRET"),
-    "COLLECTION_PRIMARY_KEY": os.environ.get("COLLECTION_PRIMARY_KEY"),
-})
+    public static void main(String[] args)  {
 
-try:
-    transaction_ref = client.requestToPay(
-        mobile="256772123456", 
-        amount="600",
-        external_id="123456789",
-        payee_note="dd", 
-        payer_message="dd",
-        currency="EUR")
-except MomoError e:
-    print(e)
+         // Make a request to pay call
+         RequestOptions opts = RequestOptions.builder()
+                        .setCollectionApiSecret("MY_SECRET_API_KEY")
+                        .setCollectionPrimaryKey("MY_SECRET_SUBSCRIPTION_KEY")
+                        .setCollectionUserId("MYSECRET_USER_ID").build();
+
+                HashMap<String, String> collMap = new HashMap<String, String>();
+                collMap.put("amount", "100");
+                collMap.put("mobile", "1234");
+                collMap.put("externalId", "ext123");
+                collMap.put("payeeNote", "testNote");
+                collMap.put("payerMessage", "testMessage");
+
+                CollectionsClient client = new CollectionsClient(opts);
+
+                try {
+                    String transactionRef = client.requestToPay(collMap);
+                    System.out.println(transactionRef);
+                } catch (MomoApiException e) {
+                    e.printStackTrace();
+                }
+    }
+}
 ```
 
 ---
@@ -384,42 +389,50 @@ Deposit money to a mobile money account
 ---
 
 
-### Initializing disbursements
+### Disbursements
 
-```python
-import os
-from mtnmomo.collection import Disbursement
+```java
+import java.util.HashMap;
+import java.util.Map;
 
-client = Disbursement({
-    "DISBURSEMENT_USER_ID": os.environ.get("DISBURSEMENT_USER_ID"),
-    "DISBURSEMENT_API_SECRET": os.environ.get("DISBURSEMENT_API_SECRET"),
-    "DISBURSEMENT_PRIMARY_KEY": os.environ.get("DISBURSEMENT_PRIMARY_KEY"),
-})
+import ug.sparkpl.momoapi.network.RequestOptions;
+import ug.sparkpl.momoapi.network.disbursements.DisbursementsClient;
+
+
+public class MomoDisbursementsExample {
+
+    public static void main(String[] args)  {
+
+         // Make a request to pay call
+         RequestOptions opts = RequestOptions.builder()
+                        .setDisbursementApiSecret("MY_SECRET_API_KEY")
+                        .setDisbursementPrimaryKey("MY_SECRET_SUBSCRIPTION_KEY")
+                        .setDisbursementUserId("MYSECRET_USER_ID").build();
+
+
+                HashMap<String, String> collMap = new HashMap<String, String>();
+                collMap.put("amount", "100");
+                collMap.put("mobile", "1234");
+                collMap.put("externalId", "ext123");
+                collMap.put("payeeNote", "testNote");
+                collMap.put("payerMessage", "testMessage");
+
+                DisbursementsClient client = new DisbursementsClient(opts);
+
+                try {
+                    String transactionRef = client.transfer(collMap);
+                    System.out.println(transactionRef);
+                } catch (MomoApiException e) {
+                    e.printStackTrace();
+                }
+    }
+}
 ```
 
 NOTE: remember to use a generate new credentials using a disbursements primary key
 
 ---
 
-
-### Making a payment
-
-- Call `transfer`, it returns  a transaction id or fails with  an error
-
-```python
-import os
-from mtnmomo.collection import Disbursement
-
-client = Disbursement({
-    "DISBURSEMENT_USER_ID": os.environ.get("DISBURSEMENT_USER_ID"),
-    "DISBURSEMENT_API_SECRET": os.environ.get("DISBURSEMENT_API_SECRET"),
-    "DISBURSEMENT_PRIMARY_KEY": os.environ.get("DISBURSEMENT_PRIMARY_KEY"),
-})
-
-client.transfer(amount="600", mobile="256772123456", external_id="123456789", payee_note="dd",      payer_message="dd", currency="EUR")
-```
-
----
 
 
 ### Making a payment
