@@ -1,5 +1,11 @@
 ---
+# MTN MOMO API JAVA TRAINING
 
+## WI-FI Network: TIA_Events
+
+## Wi-Fi Key:  F33l@TIA#
+
+---
 
 # Speaker
 
@@ -10,6 +16,30 @@
 
 
 ---
+## Themes We shall Explore
+- Introduction to the APIs in General
+- How Momo API Works
+- Java library walk through
+- Best Practices
+
+---
+
+
+### So, why an open API?
+
+MTN Uganda posits that an Open API will enable third parties to easily develop, test and deliver new value propositions are likely to produce innovative solutions that entice customers to transact more digitally.
+
+### Possible use cases to explore
+
+- Interoperability between mobile money and banks, 
+or among mobile money providers
+- Merchant payments, online and offline, including delegated authentication 
+of transactions i.e make payments on behalf of their users
+- Bill payments and instant notification of payment
+- Basic account management
+- International transfers/Remittences, including request for quotation
+- Bulk transactions
+- Cash in / Cash out
 
 ### What is an API?
 
@@ -132,6 +162,22 @@ Create, Read,Update, and Delete (CRUD) transactions against these resources
 
 ---
 
+### To Start
+
+Sign Up
+Subscribe to a Product
+Generate API User and API Key
+
+---
+
+### Developer Account
+
+- Sign up on https://momodeveloper.mtn.com/
+
+- Subscribe to Collections and Disbursement and obtain primary key for each
+
+---
+
 ###  API Archtecture
 
 - Leverages Azure API management
@@ -174,6 +220,13 @@ The portal provides two different experiences, publisher and developer.
 ![Logo](assets/img/products.jpg)
 ---
 
+### Products
+- Collections
+- Disbursements
+- Remittance
+- Collection Widget
+
+---
 ### Subscriptions
 - Primary or secondar and are interchangable
 
@@ -190,13 +243,9 @@ they are used to track developers, usage, and policy configurations.
  - A developer cannot use a single subscription key for two different products
 
 ---
-### Developer Account
 
-- Sign up on https://momodeveloper.mtn.com/
 
-- Subscribe to Collections and Disbursement and obtain primary key for each
 
----
 
 
 ### Installation
@@ -273,7 +322,6 @@ $ ./gradlew provisionUser --args='-Ocp-Apim-Subscription-Key \
 
 ---
 
-class: center, middle
 
 ### For maximum security, implement the integration with MTN in your backend
 
@@ -284,7 +332,11 @@ This way, you will not need any secret keys in your client
 
 ### Collections
 
-Withdraw money from your customer's account
+- This operation is used to request a payment from a consumer (Payer). 
+- The payer will be asked to authorize the payment.
+- The transaction will be executed once the payer has authorized the payment.
+- The requesttopay will be in status PENDING until the transaction 
+is authorized or declined by the payer or it is timed out by the system
 
 ---
 
