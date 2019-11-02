@@ -1,9 +1,9 @@
 ---
-# MTN MOMO API JAVA TRAINING
+## MTN MOMO API JAVA TRAINING
 
-## WI-FI Network: TIA_Events
+### WI-FI Network: TIA_Events
 
-## Wi-Fi Key:  F33l@TIA#
+### Wi-Fi Key:  F33l@TIA#
 
 ---
 
